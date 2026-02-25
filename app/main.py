@@ -2,6 +2,13 @@ from fastapi import FastAPI, Depends
 from app.api.routers import auth
 from app.api.deps import get_current_user
 
+# --- NUEVO: Importaciones de la Base de Datos ---
+from app.db.database import engine
+from app.db.models import Base
+
+# --- NUEVO: Esto le dice a SQLAlchemy que cree las tablas en PostgreSQL al arrancar ---
+Base.metadata.create_all(bind=engine)
+
 # En esta fase inicial, nos centramos en establecer la estructura básica de la API
 # y en implementar un sistema de autenticación simple.
 app = FastAPI(
