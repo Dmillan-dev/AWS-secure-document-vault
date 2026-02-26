@@ -6,8 +6,8 @@ from passlib.context import CryptContext
 
 from app.core.config import settings
 
-# bcrypt_sha256 evita problemas del límite de 72 bytes de bcrypt puro
-pwd_context = CryptContext(schemes=["bcrypt_sha256"], deprecated="auto")
+# Esquema estable en CI y sin límite de 72 bytes de bcrypt
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
