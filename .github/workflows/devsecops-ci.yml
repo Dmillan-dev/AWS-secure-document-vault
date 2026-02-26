@@ -3,6 +3,8 @@ name: DevSecOps CI Pipeline
 on:
   pull_request:
     branches: ["main"]
+  push:
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -25,16 +27,19 @@ jobs:
       - name: 📦 Instalar dependencias
         run: |
           python -m pip install --upgrade pip
+          # Evita conflicto passlib/bcrypt en runners
+          pip uninstall -y bcrypt passlib || true
           pip install -r requirements.txt
           pip install -r requirements-test.txt
+          # Fuerza versiones compatibles
+          pip install "passlib[bcrypt]==1.7.4" "bcrypt==4.0.1"
 
       - name: 🔎 Diagnóstico entorno
         run: |
-          pwd
           python -V
+          pip freeze | grep -E "passlib|bcrypt|pytest|fastapi|sqlalchemy" || true
           ls -la
           ls -la tests || true
-          echo "DATABASE_URL=$DATABASE_URL"
 
       - name: 🧪 Ejecutar tests con pytest
         run: pytest tests/ -v --tb=short --maxfail=1
