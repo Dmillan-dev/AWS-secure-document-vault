@@ -113,11 +113,3 @@ La suite está preparada para correr sin dependencias externas pesadas en local 
 
 ---
 
-## 🤝 Contribución
-
-1. Crea una rama desde `main`
-2. Implementa cambios con tests
-3. Abre Pull Request con contexto funcional/técnico
-4. Espera validación CI y review
-
----
