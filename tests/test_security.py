@@ -31,10 +31,10 @@ class TestPasswordHashing:
         hash2 = get_password_hash(password)
         assert hash1 != hash2
 
-    def test_hash_prefix_is_bcrypt(self):
-        """El hash generado debe comenzar con el prefijo de bcrypt."""
-        hashed = get_password_hash("cualquierContraseña")
-        assert hashed.startswith("$2b$")
+    def test_hash_has_expected_scheme_prefix(self):
+    """El hash generado debe usar el esquema bcrypt_sha256 de passlib."""
+    hashed = get_password_hash("cualquierContraseña")
+    assert hashed.startswith("$bcrypt-sha256$")
 
 
 class TestCreateAccessToken:
